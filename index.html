@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar JSON a la API</title>
+</head>
+<body>
+    <form id="api-form" style="text-align: left; max-width: 600px; margin: 0 auto;">
+        <div style="margin-bottom: 10px;">
+            <label for="username" style="display: block; font-weight: bold;">Username:</label>
+            <input type="text" id="username" style="width: 100%; padding: 8px;">
+        </div>
+        <div style="margin-bottom: 10px;">
+            <label for="password" style="display: block; font-weight: bold;">Password:</label>
+            <input type="password" id="password" style="width: 100%; padding: 8px;">
+        </div>
+        <div style="margin-bottom: 10px;">
+            <label for="api-url" style="display: block; font-weight: bold;">URL de la API:</label>
+            <input type="text" id="api-url" style="width: 100%; padding: 8px;">
+        </div>
+        <div style="margin-bottom: 10px;">
+            <label for="json-data" style="display: block; font-weight: bold;">JSON a enviar:</label>
+            <textarea id="json-data" rows="6" style="width: 100%; padding: 8px;"></textarea>
+        </div>
+        <button id="submit-button" type="button" style="background-color: #007BFF; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Enviar Solicitud</button>
+    </form>
+    <p id="cargando" style="display: none; text-align: center; font-weight: bold; padding: 10px;">Cargando...</p>
+    <div id="response-container" style="display: none;">
+        <h3 style="font-weight: bold;">Respuesta de la API:</h3>
+        <pre id="api-response" style="background-color: #f4f4f4; padding: 10px; border: 1px solid #ddd;"></pre>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("api-form");
+            const apiUrlInput = document.getElementById("api-url");
+            const jsonDataInput = document.getElementById("json-data"); // Nuevo campo para el JSON
+            const submitButton = document.getElementById("submit-button");
+            const responseContainer = document.getElementById("response-container");
+            const apiResponse = document.getElementById("api-response");
+            const cargando = document.getElementById("cargando");
+            submitButton.addEventListener("click", function () {
+              const username = document.getElementById("username").value;
+              const password = document.getElementById("password").value;
+              const credentials = `${username}:${password}`;
+              const encodedCredentials = btoa(credentials);
+                cargando.style.display = 'block';
+                responseContainer.style.display = "none";
+                const apiUrl = apiUrlInput.value;
+                const jsonData = jsonDataInput.value; // Obtener el JSON del campo
+
+                fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Basic ${encodedCredentials}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonData // Enviar el JSON en el cuerpo de la solicitud
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        apiResponse.textContent = JSON.stringify(data, null, 2);
+                        responseContainer.style.display = "block";
+                        cargando.style.display = 'none';
+                    })
+                    .catch(error => {
+                        apiResponse.textContent = "Error al realizar la solicitud: " + error.message;
+                        responseContainer.style.display = "block";
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
