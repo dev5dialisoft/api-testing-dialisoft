@@ -4,26 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enviar JSON a la API</title>
+    <style>
+        header {
+            background-color: #333; /* Color de fondo */
+            color: #fff; /* Color del texto */
+            padding: 1px; /* Espacio interno alrededor del contenido */
+            text-align: center; /* Alineación del texto al centro */
+        }
+    </style>
 </head>
 <body>
-    <form id="api-form" style="text-align: left; max-width: 600px; margin: 0 auto;">
+    <header>
+        <h1>Testing API</h1>
+    </header>
+    <form id="api-form" style="text-align: left; max-width: 600px; margin: 0 auto; margin-top:5px">
         <div style="margin-bottom: 10px;">
             <label for="username" style="display: block; font-weight: bold;">Username:</label>
-            <input type="text" id="username" style="width: 100%; padding: 8px;">
+            <input type="text" id="username" style="width: 100%; padding: 8px;" required>
         </div>
         <div style="margin-bottom: 10px;">
             <label for="password" style="display: block; font-weight: bold;">Password:</label>
-            <input type="password" id="password" style="width: 100%; padding: 8px;">
+            <input type="password" id="password" style="width: 100%; padding: 8px;" required>
         </div>
         <div style="margin-bottom: 10px;">
             <label for="api-url" style="display: block; font-weight: bold;">URL de la API:</label>
-            <input type="text" id="api-url" style="width: 100%; padding: 8px;">
+            <input type="text" id="api-url" style="width: 100%; padding: 8px;" required>
         </div>
         <div style="margin-bottom: 10px;">
             <label for="json-data" style="display: block; font-weight: bold;">JSON a enviar:</label>
-            <textarea id="json-data" rows="6" style="width: 100%; padding: 8px;"></textarea>
+            <textarea id="json-data" rows="6" style="width: 100%; padding: 8px;" required></textarea>
         </div>
-        <button id="submit-button" type="button" style="background-color: #007BFF; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Enviar Solicitud</button>
+        <button id="submit-button" type="submit" style="background-color: #007BFF; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Enviar Solicitud</button>
     </form>
     <p id="cargando" style="display: none; text-align: center; font-weight: bold; padding: 10px;">Cargando...</p>
     <div id="response-container" style="display: none;">
